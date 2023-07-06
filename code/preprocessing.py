@@ -1,7 +1,3 @@
-#############################
-###     PREPROCESSING     ###
-#############################
-
 #%% import relevant packages -----------------------------------------------------------
 import pandas as pd
 import numpy as np
@@ -18,7 +14,6 @@ from PIL import Image
 from bertopic import BERTopic
 import csv
 from bertopic.representation import KeyBERTInspired
-from sklearn.manifold import MDS
 
 #%% load data from csv files -----------------------------------------------------------
 
@@ -28,7 +23,7 @@ askwomen = pd.read_csv('../data/askwomen.csv')
 content_men = np.array(askmen['content']) 
 content_women = np.array(askwomen['content']) 
 
-#%% data inspection
+#%% data inspection -----------------------------------------------------------------
 
 posts_men = len(content_men)
 posts_women = len(content_women)
@@ -199,6 +194,8 @@ topic_info = pd.read_csv('../data/BerTopic_50/topic_info_combined.csv', usecols=
 df = pd.merge(gender_counts, topic_info , on='Name', how='outer')
 
 df.rename(columns={'men': 'Count_men', 'women': 'Count_women', 'Topic': 'Topic_id'}, inplace=True) #rename columns
+print('AskMen posts in topic -1:', df[df['Topic_id']==-1]['Count_men'][0])
+print('AskWomen posts in topic -1:', df[df['Topic_id']==-1]['Count_women'][0])
 df = df[df['Topic_id'] != -1] #remove topic -1 
 df = df.sort_values('Topic_id') #reorder
 df = df.reset_index(drop=True) #reset index
@@ -215,9 +212,9 @@ embeddings = embeddings.iloc[1:] #delete embedding for topic -1
 #from gensim.models import Word2Vec
 import gensim.downloader
 
-topics = list(filtered_df['Name'])
+topics = list(df['Name'])
 #use pretrained Word2Vec (trained on twitter data) -> glove embeddings 
-glove_vectors = gensim.downloader.load('glove-twitter-200')
+glove_vectors = gensim.downloader.load('glove-twitter-200') #takes several minutes to load
 
 embeddings = []
 for topic in topics:
@@ -229,11 +226,27 @@ for topic in topics:
         topic_embedding = None
     embeddings.append(topic_embedding)
 '''
-#%%use MDS to reduce embeddings to 2 dimensions
+#%%use PCA to reduce embeddings to 2 dimensions
+from sklearn.decomposition import PCA
+pca = PCA(n_components=2)
+coordinates_2d = pca.fit_transform(embeddings)
 
+#%% alternative dimensionality reduction techniques
+'''
+from sklearn.manifold import TSNE
+e = np.array(embeddings)
+tsne = TSNE(n_components=2)  
+coordinates_2d = tsne.fit_transform(e)
+#%%
+from sklearn.manifold import MDS
 mds= MDS(n_components=2)
 coordinates_2d = mds.fit_transform(embeddings)
-
+#%%
+import umap
+reducer = umap.UMAP()
+coordinates_2d = reducer.fit_transform(embeddings)
+'''
+#%%
 df_coordinates = pd.DataFrame(coordinates_2d, columns=['x', 'y'])
 data_added = pd.concat([df, df_coordinates], axis=1)
 
