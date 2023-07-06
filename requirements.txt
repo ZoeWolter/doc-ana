@@ -1,0 +1,12 @@
+datasets
+ipykernel
+bertopic
+sklearn
+jupyterlab==3.3.3
+wordcloud==1.8.1
+matplotlib==3.5.1
+seaborn==0.12.2
+numpy==1.24.3
+nltk==3.7
+spacy==3.2.4
+gensim==4.1.2

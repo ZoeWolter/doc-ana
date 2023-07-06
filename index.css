@@ -1,0 +1,64 @@
+text{
+    text-anchor: left;
+    font-size: 18px;
+}
+
+h2{
+    text-align: center;
+}
+
+p {
+    font-size: 20px; 
+}
+
+p.bigger {
+    font-size: 25px; 
+}
+
+fieldset {
+    display: flex;
+    justify-content: space-evenly;
+    border: 0;
+}
+
+#header {
+    justify-content: center;
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+#intro > div {
+    flex: 1 1 33.33%;
+    text-align: center;
+    margin: 10px;
+}
+
+.responsive-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.highlighted {
+    background: rgb(224, 224, 224);
+}
+
+
+#fieldsetplot {
+    justify-content: center;
+}
+
+div#tooltip {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ffffffa0;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 1px;
+    pointer-events: none;
+    font-size: 12;
+}
+
+

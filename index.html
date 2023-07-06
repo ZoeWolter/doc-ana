@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DocAna Project 2023</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <script src="d3.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <fieldset id="header">
+  <div>
+    <h2>From Male to Female Perspectives: Comparative Topic Analysis of AskWomen and AskMen Subreddits</h2>
+    <p>Daniela Blumberg, Nele Hapig and Zoe Wolter</p>
+  </div>
+  </fieldset>
+  <fieldset id="intro">
+    <div>
+      <img class="responsive-image"  src="img/AskWomen_WordCloud.png" alt="AskMen WordCloud">
+    </div>
+    <div>
+      <br>
+      <br>
+      <p class="bigger">
+        The AskWomen and AskMen subreddits serve as virtual spaces where individuals share their thoughts, seek advice and engage in conversations. 
+        <br><br>
+        By analyzing the topics discussed within these communities, we can explore how gender influences the subjects of interest and the nature of interactions.
+        <br>
+        Thus, the goal of this project is to uncover shared topics of interest, unique concerns and potential areas of convergence between male and female perspectives.
+      </p>
+    </div>
+    <div>
+      <img class="responsive-image" src="img/AskMen_WordCloud.png" alt="AskWomen WordCloud">
+    </div>
+  </fieldset>
+  <fieldset class="highlighted">
+    <div>
+      <h3>Data & Preprocessing</h3>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div>
+      <p>
+        From the whole reddit dataset, we started to filter the data to get online the posts written in the AskMen and AskWomen subreddits.
+        In total we got 14538 posts in the AskMen and 9278 posts in the AskWomen community. 
+        This inbalance suggests that the AskMen community is more popular and more frequently used.
+        This also rose the question if there are significantly other differences between the communities apart from the contents discussed.
+        One thing we looked at it the average post length in both subreddits. 
+        While the average post length for AskMen posts is 257, the avergae post in the AskWomen community is 250 - so there seems to be no huge difference.
+        ...
+        <br>
+        Prior to conducting the analysis, we applied several ><strong>preprocessing</strong> steps to the raw data obtained from the AskMen and AskWomen subreddits.
+        Firstly, all the text was converted to lowercase to achieve case insensitivity. 
+        To account for negation short forms, such as "can't" or "won't,"  we removed apostrophes from the posts. 
+        Next, we removed special characters to filter out any non-essential symbols or punctuation marks.
+        Stopwords, which are commonly used but carry little semantic meaning, were removed from the text as well. 
+        Finally, we applied lemmatization to reduce words to their base form, ensuring that words with similar meanings are treated equally.
+        By implementing these preprocessing steps, the raw text data from the AskMen and AskWomen subreddits were transformed into a standardized and cleaner format, laying the foundation for the subsequent topic analysis.
+        The preprocessed data was also used to create the wordclouds displayed above.
+      </p>
+    </div>
+  </fieldset>
+  <fieldset class="highlighted">
+    <div>
+      <h3>Topic Analysis using BERTopic</h3>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div>
+      <p>
+        add description of BERTopic
+
+
+        - merge of datasets to get shared topics -> 23816 posts as input data to BERTopic
+
+        - definition of topic, what is topic name
+
+        - outlier topic -1 (13490 posts in total) -> exluded from further analysis !! 56.6% of data in topic class -1
+
+        
+      </p>
+    </div>
+  </fieldset>
+  <fieldset class="highlighted">
+    <div>
+      <h3>Visualization of top 50 discussed topics</h3>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div>
+      <p>
+        <br>
+        <strong>Topic embeddings:</strong>
+        <br>
+        From the BERTopic model, we extracted high dimensional embeddings, capturing the semantic information and meaning of each topic. 
+        To be able to effectively visualize the topics, we aimed to obtain a two-dimensional representation of the topic embeddings.
+        In doing so, we applied <strong>Multi-Dimensional Scaling (MDS)</strong>, a dimensionality reduction technique that aims to preserve the pairwise distances between data points while projecting them onto a lower-dimensional space. 
+        By using MDS we could ensure that the pairwise distances in the original embedding space were maintained as closely as possible, approximately respresenting the underlying topic structure. 
+        Consequently, topics that are semantically similar or closely related should be positioned closer together in the 2D space, while those that are dissimilar should be placed farther apart. 
+        This arrangement allows to identify clusters, patterns, and even potential topic hierarchies within the dataset.
+        <br><br>
+        <strong>Design decisions:</strong>
+        <br>
+        We decided to represent each topic by a circle varying in size and color. The <strong>position</strong> of each cirlce is given by the 2D embeddings.
+        An alternative to use circles to represent the topics would be to plot the topic names directly. 
+        However, with an increasing number of topics to be analyzed, this would result in severe overplotting. This issue is significantly reduced by taking circles instead.
+        <br>
+        The <strong>size</strong> of each circle corresponds to the overall occurrence of the respective topic in the dataset. 
+        Larger circles indicate topics that appear more frequently, while smaller circles represented less common topics. 
+        This size-based representation offers an intuitive overview of the importance and prevalence of each topic in the overall dataset. 
+        <br>
+        We used the <strong>color</strong> of the circles to analyze the distribution of topics across the subreddits.
+        Topics predominantly discussed in the AskMen subreddit are represented by blue circles, while topics more commonly found in AskWomen posts are depicted with red circles. 
+        Topics with a similar level of occurrence in both subreddits are mapped to a grey color. 
+        This color-sceme offers an immediate visual cue to the relative prevalence of a topic in each subreddit. 
+        By examining the distribution of blue and red, one can quickly identify topics that are more popular or relevant to one gender-specific community compared to the other. 
+        <br>
+        In order to identify each topic, we added a tooltip, displaying the most relevant information about each topic. 
+        This includes the topics name, its id, the top 10 occuring words, the occurence of the topic as absolute number and the respective percentage for AskMen and AskWomen occurences.
+        <br><br>
+        <strong>Adjustment for inbalance in dataset:</strong>
+        <br>
+        To calculate the occurence of each topic relative to the AskMen and AskWomen subreddits, we needed to take the inbalance of our dataset into account.
+        Using the absolute number of posts within a topic for AskMen and AskWomen (topic_count_men, topic_count_women) and having 14538 posts in total in AskMen and 9278 in AskWomen, the topic share for each subreddit is given by:
+        <br>
+        <code>topic_share_men = (topic_count_men / 14538) / (topic_count_men / 14538 + topic_count_women / 9278)</code>
+        <br>
+        <code>topic_share_women = (topic_count_women / 9278) / (topic_count_women / 9278 + topic_count_men / 14538)</code>
+        <br>
+        Using these formulas, topic_share_men and topic_share_women always add up to 1, such that we can use it as domain for our color scale.
+        <br>
+      </p>
+    </div>
+  </fieldset>
+  <fieldset id="fieldsetplot">
+    <div id="plot"></div>
+    <div id="tooltip"></div>
+    <div id="legend"></div>
+  </fieldset>
+  <fieldset>>
+    <div>
+      <p>
+        - Results from viz
+
+
+        -> TODO: check if positions make more sense using own embeddings
+      </p>
+    </div>
+  <fieldset>
+    <iframe src="img/fig_combined_barchart.html" width="110%" height="620px"></iframe>
+    <iframe src="img/fig_combined_distribution.html" width="100%" height="620px"></iframe>
+  </fieldset>  
+  <p>
+    text
+  </p>
+  <iframe src="img/fig_combined_documents.html" width="100%" height="800px"></iframe>
+  <p>
+    text
+  </p>
+  <iframe src="img/fig_combined_heatmap.html" width="100%" height="500px"></iframe>
+  <p>
+    text
+  </p>
+  <fieldset>
+    <iframe src="img/fig_combined_topics.html" width="100%" height="960px"></iframe>
+    <iframe src="img/fig_combined_hierarchy.html" width="150%" height="960px"></iframe>
+  </fieldset>
+  <div>
+    <p>
+      text
+    </p>
+  <fieldset class="highlighted">
+    <div>
+      <h3>Results</h3>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div>
+      <p>
+        summarize main results
+      </p>
+    </div>
+  </fieldset>
+  <script src="index.js"></script>
+</body>
+</html>
