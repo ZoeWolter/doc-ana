@@ -147,24 +147,17 @@ document_info_combined = pd.DataFrame(topic_model_combined.get_document_info(con
 # get embeddings of each topic
 embeddings = topic_model_combined.topic_embeddings_
 
-# seperate the reddit posts into men & women (with added topics)
-document_info_men = document_info_combined.iloc[:posts_men, :] # reddit posts are still in original order
-document_info_women = document_info_combined.iloc[posts_men:, :]
-
 # save all outputs as csv
 outfile = open('../data/BerTopic_50/topic_details_combined.csv','w')
 writer = csv.writer(outfile)
 writer.writerows([[topic] for topic in topic_details_combined])
 outfile.close()
 
-# save embeddings
 emb = pd.DataFrame(embeddings)
 emb.to_csv('../data/BerTopic_50/embeddings.csv', index=False, header=False)  
 
 topic_info_combined.to_csv('../data/BerTopic_50/topic_info_combined.csv')
 document_info_combined.to_csv('../data/BerTopic_50/document_info_combined.csv')
-document_info_men.to_csv('../data/BerTopic_50/document_info_men.csv')
-document_info_women.to_csv('../data/BerTopic_50/document_info_women.csv')
 
 #%% Visualizations for topics ----------------------------------------------------------
 
