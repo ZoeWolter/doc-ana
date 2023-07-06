@@ -94,10 +94,17 @@
         <br>
         From the BERTopic model, we extracted high dimensional embeddings, capturing the semantic information and meaning of each topic. 
         To be able to effectively visualize the topics, we aimed to obtain a two-dimensional representation of the topic embeddings.
-        In doing so, we applied <strong>Multi-Dimensional Scaling (MDS)</strong>, a dimensionality reduction technique that aims to preserve the pairwise distances between data points while projecting them onto a lower-dimensional space. 
-        By using MDS we could ensure that the pairwise distances in the original embedding space were maintained as closely as possible, approximately respresenting the underlying topic structure. 
+        In doing so, we applied <strong>Principal Component Analysis (PCA)</strong>, a dimensionality reduction technique that aims to capture the maximum amount of variation present in the data, while projecting them onto a lower-dimensional space. 
+        This allows for a more concise representation approximately respresenting the underlying topic structure and preserving key patterns and relationships between topics.
         Consequently, topics that are semantically similar or closely related should be positioned closer together in the 2D space, while those that are dissimilar should be placed farther apart. 
         This arrangement allows to identify clusters, patterns, and even potential topic hierarchies within the dataset.
+        <br>
+        BERTopic itself does also perform dimensionality reduction on the embeddings to produce some in-build visualizations but unfortunately, the model does not provide an option to output the embeddings directly in a lower dimensionality.
+        <br>
+        An alternative idea was also to calculate the topic embeddings using static word embeddings extracted from the Glove 200 embeddings trained on a large corpus of twitter data. 
+        More specifically, one could get a word embedding for each word (that is not out of vocabulary) in a topic's name and then take the mean of the word embeddings as overall topic embeddings.
+        Taking the mean should work quite well in this scenario since the words constituting a topic's name should be close together in the embedding space.
+        We actually tried this approach as well and the results were quite similar to those obtained above but as we expect the embeddings coming from BERTopic to be more precise, we decided to stick with this procedure.
         <br><br>
         <strong>Design decisions:</strong>
         <br>
@@ -108,6 +115,7 @@
         The <strong>size</strong> of each circle corresponds to the overall occurrence of the respective topic in the dataset. 
         Larger circles indicate topics that appear more frequently, while smaller circles represented less common topics. 
         This size-based representation offers an intuitive overview of the importance and prevalence of each topic in the overall dataset. 
+        To ensure that each topic is visible in the visualization, we ordered the topics accordingly and draw small circles on top of larger ones.
         <br>
         We used the <strong>color</strong> of the circles to analyze the distribution of topics across the subreddits.
         Topics predominantly discussed in the AskMen subreddit are represented by blue circles, while topics more commonly found in AskWomen posts are depicted with red circles. 
@@ -143,7 +151,8 @@
         - Results from viz
 
 
-        -> TODO: check if positions make more sense using own embeddings
+        We also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
+        results. 
       </p>
     </div>
   </fieldset>
