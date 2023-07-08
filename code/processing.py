@@ -279,8 +279,8 @@ plt.savefig('../img/top10_shares.svg', bbox_inches = 'tight')
 plt.show()
 
 # add column with adjusted shares from absolute values
-topics['share_men_adjusted'] =(topics['Count_men'] / 14538) / (topics['Count_men'] / 14538 + topics['Count_women'] / 9278)
-topics['share_women_adjusted'] =(topics['Count_women'] / 9278) / (topics['Count_men'] / 14538 + topics['Count_women'] / 9278)
+topics['share_men_adjusted'] =(topics['Count_men'] / posts_men) / (topics['Count_men'] / posts_men + topics['Count_women'] / posts_women)
+topics['share_women_adjusted'] =(topics['Count_women'] / posts_women) / (topics['Count_men'] / posts_men + topics['Count_women'] / posts_women)
 
 # just relevant topics and columns
 top10 = topics.sort_values(by=['Count'], ascending = False).loc[:9, ['Name', 'share_men_adjusted', 'share_women_adjusted']]
@@ -294,4 +294,4 @@ ax.set_title('Share of AskMen and AskWomen per topic (weighted)')
 plt.axhline(y = 0.5, color = 'black', linestyle = 'dashed')
 plt.savefig('../img/top10_shares_adjusted.svg', bbox_inches = 'tight')
 plt.show()
-# %%
+

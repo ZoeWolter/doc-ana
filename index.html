@@ -43,7 +43,7 @@
   <fieldset>
     <div>
       <p>
-        From the whole reddit dataset, we started to filter the data to get online the posts written in the AskMen and AskWomen 
+        From the whole reddit dataset, we started to filter the data to get the posts written online in the AskMen and AskWomen 
         subreddits.
         In total we got 14538 posts in the AskMen and 9278 posts in the AskWomen community. 
         This inbalance suggests that the AskMen community is more popular and more frequently used.
@@ -78,7 +78,10 @@
     <div>
       <p>
         For a topic analysis, we used the topic modeling technique of <a href="https://github.com/MaartenGr/BERTopic">BERTopic</a>. 
-        Therefore, we merged the data of both subreddits 'AskMen' and 'AskWomen', so we had 23816 reddit posts overall as input data 
+        Theoretical, one could perform BERTopic individually on each dataset, but one may end up with different topic models for each dataset. 
+        This would make it challenging to compare and contrast the topics directly. 
+        By merging the datasets and applying BERTopic to all posts at once, one can ensure that the same topic modeling approach is applied uniformly to both datasets, enabling direct comparison of shared topics and differences.
+        Therefore, we merged the data of both subreddits 'AskMen' and 'AskWomen', leading to 23816 reddit posts overall as input data 
         to BERTopic. The <strong>BERTopic's algorithm</strong> comprises five steps:
         <br><br>
         1. Embeddings: Reddit posts are transformed to numerical representations <br>
@@ -87,28 +90,80 @@
         3. Clustering: the hierarchical clustering algorithm HDBSCAN is used here in order to cluster the posts <br>
         4. Tokenizer: using a bag-of-words representation of each cluster, the most frequent words of each cluster are defined <br>
         5. Topic representation: using a class-based TF-IDF as weighting scheme, the algorithm returns the "most important" words of 
-        each cluster which represent the topic
+        each cluster which represent the topic, i.e. these words constitute the topic name
         <br><br>
-        When applying the BERTopic topic modeling to our reddit data, we get 13490 reddit posts which are classified as outlier fig_combined_documents
-        that cannot be matched to a topic cluster (classified as topic -1). Thus, we had to exclude 56.6% of the data due to this classification
-        as outliers. 
+        When applying the BERTopic model to our reddit data, each post is assigned to exactly one topic, where each topic is represented as unique ID followed by its 4 most representive words. 
+        Additionally, we get the information if a certain post is representative for the assigned topic or not.
+        Then, for each topic, we extract the absolute number of posts assigned to the topic, its representative posts and the top 10 most important words.
+        <br>
+        In BERTopic, the topic ID -1 is used to represent outliers or documents that do not strongly align with any particular topic.
+        In our case, we got 13490 reddit posts that cannot be matched to a topic cluster and are thus classified as topic -1. 
+        These outliers make up 58.2% of the AskMen and 54.2% of the AskWomen posts, corresponding to overall 56.6% of our data. 
+        This is a significant portion of posts that do not fit into any specific topic cluster determined by the algorithm. 
+        This could be due to several reasons. It's possible that a substantial portion of the posts contain irrelevant content or diverse topics that do not form coherent clusters. 
+        Another explaination could be the heterogeneity in our data due to the diverse sources writing posts and due to the wide range of topics that could be covered.
+        In our case, the topic -1 corresponds to 'talk_dating_feel_relationship', so there seems to be at least some common intuition inside the cluster.
+        Nevertheless, we decided to exclude the posts classified as -1 from our further analysis to enhance the interpretability and to focus on meaningful topics.
+        In line with this, we also restricted our analysis to the top 50 topics in terms of overall occurence.
+        <br><br>
+        The BERTopic model does also include some in-build visualization that we can use for our analysis. 
+        The following plot displays each post as circle positioned given by its 2 dimensional embedding. 
       </p>
     </div>
   </fieldset>
+  <fieldset>
+    <iframe src="img/fig_combined_documents.html" width="100%" height="800px"></iframe>
+  </fieldset>
 
+  <fieldset>
+    <p>
+      text
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <iframe src="img/fig_combined_barchart.html" width="100%" height="620px" frameborder = "0"></iframe>
+  </fieldset>  
+
+  <fieldset>
+    <p>
+      text
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <iframe src="img/fig_combined_heatmap.html" width="100%" height="500px"></iframe>
+  </fieldset>
+
+  <fieldset>
+    <p>
+      text
+    </p>
+  </fieldset>
+
+
+  
   <fieldset class="highlighted">
     <div>
-      <h3>Topics of the subreddits 'AskMen' and 'AskWomen'</h3>
+      <h3>Visualization of most discussed topics</h3>
     </div>
   </fieldset>
   <fieldset>
     <div>
       <p>
         For a first analysis of the topics and whether they are more likely to be discussed in the 'AskMen' or 
-        'AskWomen' subreddit, the following plot shows the ten topics with the most posts in both subreddits and 
-        their occurence in them. You can see that there are actually topics that are more likely to be discussed 
-        in 'AskMen' such as <i>'living_career_live_debt'</i>, whereas others are more likely to be addressed in 'AskWomen'
-        as for instance <i>'hair_balding_shampoo_bald'</i>.  
+        'AskWomen' subreddit, we decided to look at a simple bar chart for the ten topics with the most posts in both subreddits.
+        <br> <br>
+        <strong>Adjustment for inbalance in dataset:</strong>
+        <br>
+        To calculate the occurence of each topic relative to the AskMen and AskWomen subreddits, we needed to take the inbalance of our dataset into account.
+        Using the absolute number of posts within a topic for AskMen and AskWomen (topic_count_men, topic_count_women) and having 14538 posts in total in AskMen and 9278 in AskWomen, the topic share for each subreddit is given by:
+        <br>
+        <code>topic_share_men = (topic_count_men / 14538) / (topic_count_men / 14538 + topic_count_women / 9278)</code>
+        <br>
+        <code>topic_share_women = (topic_count_women / 9278) / (topic_count_women / 9278 + topic_count_men / 14538)</code>
+        <br>
+        Using these formulas, topic_share_men and topic_share_women always add up to 1, such that one can easily compare the relative occurences.
       </p>
     </div>
   </fieldset> 
@@ -116,16 +171,26 @@
   <div style="margin:0 auto;text-align:center">
     <object data="img/top10_shares_adjusted.svg"></object>
   </div>
-  
-  <fieldset class="highlighted">
-    <div>
-      <h3>Visualization of top 50 discussed topics</h3>
-    </div>
-  </fieldset>
   <fieldset>
     <div>
       <p>
-        <br>
+        One can see that there are actually topics that are more likely to be discussed 
+        in 'AskMen' such as <i>'living_career_live_debt'</i>, whereas others are more likely to be addressed in 'AskWomen'
+        as for instance <i>'hair_balding_shampoo_bald'</i>.  
+        However, we can't see huge differences and the plot does only display the most common topics discussed in both communities. 
+        Additionally, this kind of visualization does not include any information about the overall importance of a topic and the similarity between topics.
+        Furthermore, it does not scale well if we want to look at more than the top 10 topics. 
+        Going deeper into the analyis of the top 50 topics, this approach seems to be not expressive enough to completely answer our reasearch question.
+        Thus, this was our motivation to come up with an advanced visualization that adressed these limitations and that is even able to include more information 
+        about each topic through user interactions, i.e. a tooltip displayed when hovering over a topic of interest.
+      </p>
+    </div>
+  </fieldset> 
+
+  <fieldset>
+    <div>
+      <p>
+        The implementation included several steps that are explained in the following. <br><br>
         <strong>Topic embeddings:</strong>
         <br>
         From the BERTopic model, we extracted high dimensional embeddings, capturing the semantic information and meaning of each topic. 
@@ -161,17 +226,6 @@
         <br>
         In order to identify each topic, we added a tooltip, displaying the most relevant information about each topic. 
         This includes the topics name, its id, the top 10 occuring words, the occurence of the topic as absolute number and the respective percentage for AskMen and AskWomen occurences.
-        <br><br>
-        <strong>Adjustment for inbalance in dataset:</strong>
-        <br>
-        To calculate the occurence of each topic relative to the AskMen and AskWomen subreddits, we needed to take the inbalance of our dataset into account.
-        Using the absolute number of posts within a topic for AskMen and AskWomen (topic_count_men, topic_count_women) and having 14538 posts in total in AskMen and 9278 in AskWomen, the topic share for each subreddit is given by:
-        <br>
-        <code>topic_share_men = (topic_count_men / 14538) / (topic_count_men / 14538 + topic_count_women / 9278)</code>
-        <br>
-        <code>topic_share_women = (topic_count_women / 9278) / (topic_count_women / 9278 + topic_count_men / 14538)</code>
-        <br>
-        Using these formulas, topic_share_men and topic_share_women always add up to 1, such that we can use it as domain for our color scale.
         <br>
       </p>
     </div>
@@ -187,42 +241,14 @@
         - Results from viz
 
 
+        <br>
+        Robustness checks/Improvement possibilities: 
         We also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
         results. 
       </p>
     </div>
   </fieldset>
 
-  <fieldset>
-    <iframe src="img/fig_combined_barchart.html" width="100%" height="620px" frameborder = "0"></iframe>
-    <iframe src="img/fig_combined_distribution.html" width="100%" height="620px"></iframe>
-  </fieldset>  
-
-  <fieldset>
-    <p>
-      text
-    </p>
-  </fieldset>
-
-  <fieldset>
-    <iframe src="img/fig_combined_documents.html" width="100%" height="800px"></iframe>
-  </fieldset>
-
-  <fieldset>
-    <p>
-      text
-    </p>
-  </fieldset>
-  
-  <fieldset>
-    <iframe src="img/fig_combined_heatmap.html" width="100%" height="500px"></iframe>
-  </fieldset>
-
-  <fieldset>
-    <p>
-      text
-    </p>
-  </fieldset>
 
   <fieldset>
     <iframe src="img/fig_combined_topics.html" width="100%" height="960px"></iframe>
