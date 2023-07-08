@@ -35,17 +35,20 @@ print(f'total amount of posts in AskWomen: {posts_women}')
 post_lengths_men = [len(post.split()) for post in content_men] 
 post_lengths_women = [len(post.split()) for post in content_women] 
 
-sns.countplot(x=post_lengths_men)
-plt.title('Distribution of post lengths after Preprocessing for AskMen')
-plt.xlabel('Post length')
-plt.ylabel('Frequency')
-plt.show()
+fig, ax = plt.subplots(1,2)
+fig.suptitle('Distribution of post lengths')
 
-sns.countplot(x=post_lengths_women)
-plt.title('Distribution of post lengths after Preprocessing for AskWomen')
-plt.xlabel('Post length')
-plt.ylabel('Frequency')
-plt.show()
+sns.countplot(x = post_lengths_men, color = 'blue', ax = ax[0])
+ax[0].set_title('AskMen\naverage: 257')
+ax[0].set_xlabel('Post length')
+ax[0].set_ylabel('Frequency')
+
+sns.countplot(x = post_lengths_women, color = 'red', ax = ax[1])
+ax[1].set_title('AskWomen\naverage: 250')
+ax[1].set_xlabel('Post length')
+ax[1].set_ylabel('Frequency')
+
+fig.show()
 
 print(f'Average post length AskMen: {np.round(np.mean(post_lengths_men))}')
 print(f'Average post length AskWomen: {np.round(np.mean(post_lengths_women))}')
@@ -272,7 +275,7 @@ ax.set_xticklabels(top10['Name'], rotation = 45, ha = 'right')
 ax.legend(['AskMen', 'AskWomen'])
 ax.set_title('Share of AskMen and AskWomen per topic (unweighted)')
 plt.axhline(y = 0.5, color = 'black', linestyle = 'dashed')
-plt.savefig('../img/top10_shares.png', bbox_inches = 'tight')
+plt.savefig('../img/top10_shares.svg', bbox_inches = 'tight')
 plt.show()
 
 # add column with adjusted shares from absolute values
@@ -289,5 +292,6 @@ ax.set_xticklabels(top10['Name'], rotation = 45, ha = 'right')
 ax.legend(['AskMen', 'AskWomen'])
 ax.set_title('Share of AskMen and AskWomen per topic (weighted)')
 plt.axhline(y = 0.5, color = 'black', linestyle = 'dashed')
-plt.savefig('../img/top10_shares_adjusted.png', bbox_inches = 'tight')
+plt.savefig('../img/top10_shares_adjusted.svg', bbox_inches = 'tight')
 plt.show()
+# %%

@@ -22,6 +22,8 @@
       <br>
       <br>
       <p class="bigger">
+        <b>How does gender influence the subjects of interest and the nature of interactions?</b>
+        <br><br>
         The AskWomen and AskMen subreddits serve as virtual spaces where individuals share their thoughts, seek advice and engage in conversations. 
         <br><br>
         By analyzing the topics discussed within these communities, we can explore how gender influences the subjects of interest and the nature of interactions.
@@ -34,22 +36,29 @@
     </div>
   </fieldset>
   <fieldset class="highlighted">
-    <div>
+    <div class="section">
       <h3>Data & Preprocessing</h3>
     </div>
   </fieldset>
   <fieldset>
     <div>
       <p>
-        From the whole reddit dataset, we started to filter the data to get online the posts written in the AskMen and AskWomen subreddits.
+        From the whole reddit dataset, we started to filter the data to get online the posts written in the AskMen and AskWomen 
+        subreddits.
         In total we got 14538 posts in the AskMen and 9278 posts in the AskWomen community. 
         This inbalance suggests that the AskMen community is more popular and more frequently used.
-        This also rose the question if there are significantly other differences between the communities apart from the contents discussed.
-        One thing we looked at it the average post length in both subreddits. 
-        While the average post length for AskMen posts is 257, the avergae post in the AskWomen community is 250 - so there seems to be no huge difference.
-        ...
-        <br>
-        Prior to conducting the analysis, we applied several ><strong>preprocessing</strong> steps to the raw data obtained from the AskMen and AskWomen subreddits.
+        This also rose the question if there are significantly other <strong>differences between the communities</strong> apart 
+        from the contents discussed.
+        <br><br>
+        One thing we looked at is the average post length in both subreddits. 
+        While the average post length for AskMen posts is 257, the avergae post in the AskWomen community is 250 - so there seems 
+        to be no huge difference. The following bar plot shows the distribution of post lengths within both subreddits:
+      </p>
+        <div style="margin:0 auto;text-align:center">
+          <img class="responsive-image" src="img/post-length.svg" alt="Distribution post lengths">
+        </div>
+      <p>  
+        Prior to conducting the analysis, we applied several <strong>preprocessing</strong> steps to the raw data obtained from the AskMen and AskWomen subreddits.
         Firstly, all the text was converted to lowercase to achieve case insensitivity. 
         To account for negation short forms, such as "can't" or "won't,"  we removed apostrophes from the posts. 
         Next, we removed special characters to filter out any non-essential symbols or punctuation marks.
@@ -68,6 +77,9 @@
   <fieldset>
     <div>
       <p>
+        For a topic analysis, we used the topic modeling technique of <a href="https://github.com/MaartenGr/BERTopic">BERTopic</a>. 
+
+
         add description of BERTopic
 
 
@@ -180,7 +192,7 @@
   </fieldset>
 
   <fieldset>
-    <iframe src="img/fig_combined_barchart.html" width="100%" height="620px"></iframe>
+    <iframe src="img/fig_combined_barchart.html" width="100%" height="620px" frameborder = "0"></iframe>
     <iframe src="img/fig_combined_distribution.html" width="100%" height="620px"></iframe>
   </fieldset>  
 
