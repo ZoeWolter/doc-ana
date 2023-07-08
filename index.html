@@ -78,18 +78,20 @@
     <div>
       <p>
         For a topic analysis, we used the topic modeling technique of <a href="https://github.com/MaartenGr/BERTopic">BERTopic</a>. 
-
-
-        add description of BERTopic
-
-
-        - merge of datasets to get shared topics -> 23816 posts as input data to BERTopic
-
-        - definition of topic, what is topic name
-
-        - outlier topic -1 (13490 posts in total) -> exluded from further analysis !! 56.6% of data in topic class -1
-
-        
+        Therefore, we merged the data of both subreddits 'AskMen' and 'AskWomen', so we had 23816 reddit posts overall as input data 
+        to BERTopic. The <strong>BERTopic's algorithm</strong> comprises five steps:
+        <br><br>
+        1. Embeddings: Reddit posts are transformed to numerical representations <br>
+        2. Dimensionality Reduction: here the Uniform Manifold Approximation and Projection (<a href="https://github.com/lmcinnes/umap">UMAP</a>) 
+        dimension reduction technique is used<br>
+        3. Clustering: the hierarchical clustering algorithm HDBSCAN is used here in order to cluster the posts <br>
+        4. Tokenizer: using a bag-of-words representation of each cluster, the most frequent words of each cluster are defined <br>
+        5. Topic representation: using a class-based TF-IDF as weighting scheme, the algorithm returns the "most important" words of 
+        each cluster which represent the topic
+        <br><br>
+        When applying the BERTopic topic modeling to our reddit data, we get 13490 reddit posts which are classified as outlier fig_combined_documents
+        that cannot be matched to a topic cluster (classified as topic -1). Thus, we had to exclude 56.6% of the data due to this classification
+        as outliers. 
       </p>
     </div>
   </fieldset>
