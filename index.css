@@ -18,7 +18,9 @@ p.bigger {
 fieldset {
     display: flex;
     justify-content: space-evenly;
+    width: 80%;
     border: 0;
+    margin: auto;
 }
 
 #header {

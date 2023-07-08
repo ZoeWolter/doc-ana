@@ -1,7 +1,8 @@
 datasets
 ipykernel
 bertopic
-sklearn
+# sklearn
+scikit-learn
 jupyterlab==3.3.3
 wordcloud==1.8.1
 matplotlib==3.5.1
