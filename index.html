@@ -22,13 +22,13 @@
       <br>
       <br>
       <p class="bigger">
-        <b>How does gender influence the subjects of interest and the nature of interactions?</b>
+        <b>Are people interested in different topics when it comes to asking either men or women?</b>
         <br><br>
         The AskWomen and AskMen subreddits serve as virtual spaces where individuals share their thoughts, seek advice and engage in conversations. 
         <br><br>
         By analyzing the topics discussed within these communities, we can explore how gender influences the subjects of interest and the nature of interactions.
         <br>
-        Thus, the goal of this project is to uncover shared topics of interest, unique concerns and potential areas of convergence between male and female perspectives.
+        Thus, the goal of this project is to uncover shared topics of interest, unique concerns and potential areas of convergence between male and female communities.
       </p>
     </div>
     <div>
@@ -106,7 +106,8 @@
         Nevertheless, we decided to exclude the posts classified as -1 from our further analysis to enhance the interpretability and to focus on meaningful topics.
         In line with this, we also restricted our analysis to the top 50 topics in terms of overall occurence.
         <br><br>
-        The BERTopic model does also include some in-build visualization that we used for our analysis. The conclusions drawn from the visualizations are discussed below.  
+        The BERTopic model does also include some in-build visualization that we used for our analysis. 
+        The conclusions drawn from the visualizations are discussed below.  
       </p>
     </div>
   </fieldset>
@@ -116,40 +117,40 @@
 
   <fieldset>
     <p>
-      The above diagram shows all posts that have been sorted into a topic as individual circles with a position given by their 2-dimensional embeddings. 
-      This figure gives a first insight into the relationship between the individual posts. Posts that belong to the same topic are usually close to each other, 
-      as is the case with topic 1. Other contributions belonging to one topic are very close to other themes (see themes 4 and 10) and therefore seem to be more closely related to each other. 
-      In the following, we will take a closer look at the topic clusters and how they differ in the two subreddits.
+      The above diagram shows all posts as individual circles with a position given by their 2-dimensional embeddings. 
+      The color of each circle reflects the assigned topic of the respective post.
+      This figure gives a first insight into the relationship between the individual posts and the topics. 
+      Posts that belong to the same topic tend to be close to each other, as in the case of topic 1. 
+      However, some topics seem to be more spread out as for instance topic 9 or 26.
+      Other contributions belonging to a certain topic are very close to other themes (see themes 4 and 10) and therefore seem to be more closely related to each other.
+      in contrast, some topics are farther apart from all the others (see topic 23). 
+      Moreover, one can also see that some topics appear more frequent than others. 
+      An example here is given by topic 0, that takes up almost the entire lower right corner.
+      Althought the visualization includes an option to filter the data (hide certain topics), it does suffers heavily from overplotting, making it hard to draw conclusions on individual topics.
+      With an increased number of topic, it is also difficult to distinguish the topics from each other, as the same color is used for multiple topics.
     </p>
   </fieldset>
 
   <fieldset>
-    <iframe src="img/fig_combined_barchart.html" width="100%" height="620px" frameborder = "0"></iframe>
+    <iframe src="img/fig_combined_barchart.html" width="100%" height="800px" frameborder = "0"></iframe>
+    <iframe src="img/fig_combined_heatmap.html" width="100%" height="800px"></iframe>
   </fieldset>  
 
   <fieldset>
     <p>
-      The figure above shows the first 20 topics derived from the BERTopic model and illustrates the relative c-TF-IDF scores of the most frequently recurring words associated with each topic.
-      Using this plot, we can make inferences about the semantics of each topic. For example, for Topic 1, the c-TF-IDF scores are highest for the words "thin", "fat", and "overweight", as well as "diet". 
-      This indicates that posts sorted into this topic discuss issues related to body weight.
-    </p>
-  </fieldset>
-
-  <fieldset>
-    <iframe src="img/fig_combined_heatmap.html" width="100%" height="500px"></iframe>
-  </fieldset>
-
-  <fieldset>
-    <p>
+      The figure on the left shows the first 20 topics derived from the BERTopic model and illustrates the relative c-TF-IDF scores of the most frequently recurring words associated with each topic.
+      Using this plot, we can make inferences about the semantics of each topic. For example, for Topic 1, the c-TF-IDF scores are highest for the words "skinny", "fat", and "overweight", as well as "diet". 
+      This indicates that posts classified into this topic discuss issues related to body weight.
+      <br><br>
       In addition to the c-TF-IDF scores for each word of a topic, BERTopic also calculates topic embeddings. 
       These are the weighted average of the c-TF-IDF scores of the words that belong to each topic. Based on these topic embeddings, 
-      we can create a matrix by applying cosine similarities, which is calculated as the cosine of the angle between two vectors. 
-      The figure above shows the resulting matrix which indicates the similarity between topics. As we can see, the first topics created by the model, 
+      we can create a matrix by applying cosine similarities, calculated as the cosine of the angle between two vectors. 
+      The figure on the right shows the resulting similarity matrix of the top 50 topics. As we can see, the first topics created by the model, 
       that also contain most of the posts, are more similar to each other than the last topics. This indicates that the topics discussed 
-      in the majority of posts can be distinguished from each other but are in general very similar in their content.
+      in the majority of posts can be distinguished from each other but are in general related in their content.
+      
     </p>
   </fieldset>
-
 
   
   <fieldset class="highlighted">
@@ -160,8 +161,12 @@
   <fieldset>
     <div>
       <p>
+        The build-in visualizations of BERTopic offer some insights about the individual posts, the extracted topics and their similarities, but they do not provide a way to compare topic importance inside the AskMen and AskWomen community.
+        To compare the subreddits in terms of shared and unique topics of interest in one or the other community, we needed to come up with our own
+        visualization(s) that address our research question.
+        <br><br>
         For a first analysis of the topics and whether they are more likely to be discussed in the 'AskMen' or 
-        'AskWomen' subreddit, we decided to look at a simple bar chart for the ten topics with the most posts in both subreddits.
+        'AskWomen' subreddit, we decided to look at a simple bar chart for the 10 topics with the highest occurence in both subreddits.
         <br> <br>
         <strong>Adjustment for inbalance in dataset:</strong>
         <br>
@@ -244,16 +249,15 @@
     <div id="tooltip"></div>
     <div id="legend"></div>
   </fieldset>
-  <fieldset>>
+  <fieldset>
     <div>
       <p>
         - Results from viz
 
-
-        <br>
-        Robustness checks/Improvement possibilities: 
-        We also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
-        results. 
+        topics discussed in both communities tend to be rather similar
+        most discussed topic in both communities is about relationships and dating, followed by body weight, attractiveness, sex, sixism,...
+        AskWomen: small tendency to discuss more appearance and hygiene-related topics (diet, acne, period, hairstyle), lifestyle questions (last name in marriages, clubbing), and topics like abortion or pain 
+        AskMen: topics like circumcision, military, weapons and alcohol are more frequently discussed
       </p>
     </div>
   </fieldset>
@@ -266,7 +270,9 @@
 
   <fieldset>
     <p>
-      text
+      BERTopic creates denser and more clearly separated clusters.
+      We also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
+      results.
     </p>
   </fieldset>
 
