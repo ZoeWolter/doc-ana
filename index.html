@@ -141,7 +141,12 @@
 
   <fieldset>
     <p>
-      text
+      In addition to the c-TF-IDF scores for each word of a topic, BERTopic also calculates topic embeddings. 
+      These are the weighted average of the c-TF-IDF scores of the words that belong to each topic. Based on these topic embeddings, 
+      we can create a matrix by applying cosine similarities, which is calculated as the cosine of the angle between two vectors. 
+      The figure above shows the resulting matrix which indicates the similarity between topics. As we can see, the first topics created by the model, 
+      that also contain most of the posts, are more similar to each other than the last topics. This indicates that the topics discussed 
+      in the majority of posts can be distinguished from each other but are in general very similar in their content.
     </p>
   </fieldset>
 
