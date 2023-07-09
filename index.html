@@ -106,8 +106,7 @@
         Nevertheless, we decided to exclude the posts classified as -1 from our further analysis to enhance the interpretability and to focus on meaningful topics.
         In line with this, we also restricted our analysis to the top 50 topics in terms of overall occurence.
         <br><br>
-        The BERTopic model does also include some in-build visualization that we can use for our analysis. 
-        The following plot displays each post as circle positioned given by its 2 dimensional embedding. 
+        The BERTopic model does also include some in-build visualization that we used for our analysis. The conclusions drawn from the visualizations are discussed below.  
       </p>
     </div>
   </fieldset>
@@ -117,7 +116,10 @@
 
   <fieldset>
     <p>
-      text
+      The above diagram shows all posts that have been sorted into a topic as individual circles with a position given by their 2-dimensional embeddings. 
+      This figure gives a first insight into the relationship between the individual posts. Posts that belong to the same topic are usually close to each other, 
+      as is the case with topic 1. Other contributions belonging to one topic are very close to other themes (see themes 4 and 10) and therefore seem to be more closely related to each other. 
+      In the following, we will take a closer look at the topic clusters and how they differ in the two subreddits.
     </p>
   </fieldset>
 
@@ -127,7 +129,9 @@
 
   <fieldset>
     <p>
-      text
+      The figure above shows the first 20 topics derived from the BERTopic model and illustrates the relative c-TF-IDF scores of the most frequently recurring words associated with each topic.
+      Using this plot, we can make inferences about the semantics of each topic. For example, for Topic 1, the c-TF-IDF scores are highest for the words "thin", "fat", and "overweight", as well as "diet". 
+      This indicates that posts sorted into this topic discuss issues related to body weight.
     </p>
   </fieldset>
 
