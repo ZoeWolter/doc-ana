@@ -12,7 +12,7 @@ p {
 }
 
 p.bigger {
-    font-size: 22px; 
+    font-size: 25px; 
 }
 
 fieldset {
@@ -44,7 +44,6 @@ fieldset {
 .highlighted {
     background: rgb(224, 224, 224);
 }
-
 
 #fieldsetplot {
     justify-content: center;

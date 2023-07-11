@@ -61,8 +61,8 @@
         subreddits. The description of both subreddits already indicates that <b>there might be differences in topics</b>, 
         but is it really the case?
         <ul>
-          <li><b>AskWomen:</b> A subreddit dedicated to asking women questions about their thoughts, lives, and experiences.</li>
-          <li><b>AskMen:</b> A semi-serious place to ask men casual questions about life, career, and more.</li>
+          <li><p><b>AskWomen:</b> A subreddit dedicated to asking women questions about their thoughts, lives, and experiences.</p></li>
+          <li><p><b>AskMen:</b> A semi-serious place to ask men casual questions about life, career, and more.</p></li>
         </ul>
       </p>
     </div>
@@ -286,12 +286,17 @@
   <fieldset>
     <div>
       <p>
-        - Results from viz
+        The visualization of the topics and their presence in the subreddits AskMen and AskWomen above shows that the topics discussed
+        in both communities tend to be rather similar:
 
-        topics discussed in both communities tend to be rather similar
-        most discussed topic in both communities is about relationships and dating, followed by body weight, attractiveness, sex, sixism,...
-        AskWomen: small tendency to discuss more appearance and hygiene-related topics (diet, acne, period, hairstyle), lifestyle questions (last name in marriages, clubbing), and topics like abortion or pain 
-        AskMen: topics like circumcision, military, weapons and alcohol are more frequently discussed
+        <ul>
+          <li><p>The most discussed topic in both communities is about relationship and dating (1777 posts overall) and the topic 
+            seems to be discussed almost equally often in both subreddits.</p></li>
+          <li><p>The most frequently discussed topic is followed by topics about body weight, attractiveness, sex, sexism, ...</p></li>
+          <li><p>For the AskWomen subreddit, there is a small tendency to discuss more appaerance and hygiene-related topics 
+            (diet, acne, period, hairstyle), lifestyle questions (last name in marriages, clubbing), and topics like abortion or pain.</p></li>
+          <li><p>In the AskMen subreddit, the discussions are more likely to cover topics like circumcision, military, weapons, and alcohol.</p></li>
+        </ul>
       </p>
     </div>
   </fieldset>
@@ -304,8 +309,8 @@
 
   <fieldset>
     <p>
-      BERTopic creates denser and more clearly separated clusters.
-      We also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
+      The in-built visualizations of BERTopic create denser and more clearly separated clusters than it can be seen in our own visualization.
+      Thus, we also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
       results.
     </p>
   </fieldset>
@@ -319,7 +324,17 @@
   <fieldset>
     <div>
       <p>
-        summarize main results
+        <ul>
+          <li><p>Whereas most discussed topics in both communities are very <b>similar</b>, however some topics are in fact more 
+            likely to occur in one or the other subreddit.</p></li>
+          <li><p>Most frequently discussed topic within both communities is <b>relationships and dating</b>.</p></li>
+          <li><p>However, our findings are <b>limited</b> as it is only a descriptive analysis, so no causal confirmation of those
+            differences is possible.</p></li>
+          <li><p>Topic modelling yields nice <b>first insights</b>, but most frequent words do not necessarily help to understand what 
+            a topic might be about. Additionally, it seems to be quite questionable whether the pure frequency of words defines 
+            a topic. On top of that, it is problematic if a post does not match any of the other defined topics or one post is about
+            more than one topic.</p></li>
+        </ul>
       </p>
     </div>
   </fieldset>
