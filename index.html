@@ -51,7 +51,7 @@
         large gendered variation (cf. Latack et al. (2021)). Jaech et al. (2015) ask how <b>language affects the reaction</b> of
         community in Reddit comments and find that informativeness and relevance are useful feature categories to
         improve comment ranking. On top of that, text, users, and sentiment can be included in order
-        to research genered communities (cf. Lucy and Mendelsohn (2018)). This study shows that "the high <b>sentiment 
+        to research gendered communities (cf. Lucy and Mendelsohn (2018)). This study shows that "the high <b>sentiment 
         similarity</b> between r/askmen and r/askwomen misaligns with their low <b>text similarity</b> [...] and near
         average <b>user similarity</b>". Khan and Golab (2020) aim to understand gendered movements on Reddit and thus use topic
         modelling (Non-negative Matrix Factorization topic modelling algorithm). They conclude that the subreddits 
@@ -96,10 +96,9 @@
         Firstly, all the text was converted to lowercase to achieve case insensitivity. 
         To account for negation short forms, such as "can't" or "won't,"  we removed apostrophes from the posts. 
         Next, we removed special characters to filter out any non-essential symbols or punctuation marks.
-        Stopwords, which are commonly used but carry little semantic meaning, were removed from the text as well. 
         Finally, we applied lemmatization to reduce words to their base form, ensuring that words with similar meanings are treated equally.
         By implementing these preprocessing steps, the raw text data from the AskMen and AskWomen subreddits were transformed into a standardized and cleaner format, laying the foundation for the subsequent topic analysis.
-        The preprocessed data was also used to create the wordclouds displayed above.
+        The preprocessed data was also used to create the wordclouds displayed above. However, stopwords, which are commonly used but carry little semantic meaning, were removed from the text as well for this purpose. 
       </p>
     </div>
   </fieldset>
@@ -131,12 +130,12 @@
         Then, for each topic, we extract the absolute number of posts assigned to the topic, its representative posts and the top 10 most important words.
         <br>
         In BERTopic, the topic ID -1 is used to represent outliers or documents that do not strongly align with any particular topic.
-        In our case, we got 11361(10548) reddit posts that cannot be matched to a topic cluster and are thus classified as topic -1. 
-        These outliers make up x 44.9% of the AskMen and x 43.4% of the AskWomen posts, corresponding to overall x 44.3% of our data. 
+        In our case, we got 11361 reddit posts that cannot be matched to a topic cluster and are thus classified as topic -1. 
+        These outliers make up 48.6% of the AskMen and 45.9% of the AskWomen posts, corresponding to overall 47.7% of our data. 
         This is a significant portion of posts that do not fit into any specific topic cluster determined by the algorithm. 
         This could be due to several reasons. It's possible that a substantial portion of the posts contain irrelevant content or diverse topics that do not form coherent clusters. 
         Another explaination could be the heterogeneity in our data due to the diverse sources writing posts and due to the wide range of topics that could be covered.
-        In our case, the topic -1 corresponds to 'talk_dating_feel_relationship', so there seems to be at least some common intuition inside the cluster.
+        In our case, the topic -1 corresponds to 'relationship_be_girl_her', so there seems to be at least some common intuition (girls in relationsships) inside the cluster.
         Nevertheless, we decided to exclude the posts classified as -1 from our further analysis to enhance the interpretability and to focus on meaningful topics.
         In line with this, we also restricted our analysis to the top 50 topics in terms of overall occurence.
         <br><br>
@@ -152,15 +151,19 @@
   <fieldset>
     <p>
       The above diagram shows all posts as individual circles with a position given by their 2-dimensional embeddings. 
-      The color of each circle reflects the assigned topic of the respective post.
-      This figure gives a first insight into the relationship between the individual posts and the topics. 
-      Posts that belong to the same topic tend to be close to each other, as in the case of topic 1. 
-      However, some topics seem to be more spread out as for instance topic 9 or 26.
-      Other contributions belonging to a certain topic are very close to other themes (see themes 4 and 10) and therefore seem to be more closely related to each other.
-      In contrast, some topics are farther apart from all the others (see topic 23). 
+      The color of each circle reflects the assigned topic of the respective post. 
+      One can direclty see the huge number of unclassified posts spread all over the visualization, displayed as greyish circles.
+      Moreover, the figure gives a first insight into the relationship between the individual posts and the topics. 
+      Posts that belong to the same topic tend to be close to each other and form dense clusters, as in the case of topic 8 or 9. 
+      However, some topics seem to be more spread out as for instance topic 6, 12 or 20.
+      Some contributions belonging to a certain topic are very close to other themes (see themes 5 abput parents and 7 about career). 
+      These posts and topcis seem to be more closely related in terms of semantics to each other.
+      In contrast, some topics are farther apart from all the others or at the corners (see topic 32 about tattoos and piercings). 
       Moreover, one can also see that some topics appear more frequent than others. 
-      An example here is given by topic 0, that takes up almost the entire lower right corner.
-      Althought the visualization includes an option to filter the data (hide certain topics), it does suffers heavily from overplotting, making it hard to draw conclusions on individual topics.
+      An example here is given by topic 0, that takes up almost the entire upper left corner.
+      Topic number 47 seems to be rather an outlier topic as it is diplayed far apart from the others in the upper right corner and does not seem to have much posts assigned to it. 
+      The name seems also strange, which strengthens this assumption.
+      Althought the visualization includes an option to filter the data (hide certain topics), it is very crowded and suffers heavily from overplotting, making it hard to draw conclusions on individual topics or posts.
       With an increased number of topic, it is also difficult to distinguish the topics from each other, as the same color is used for multiple topics.
     </p>
   </fieldset>
@@ -172,16 +175,20 @@
 
   <fieldset>
     <p>
-      The figure on the left shows the first 20 topics derived from the BERTopic model and illustrates the relative c-TF-IDF scores of the most frequently recurring words associated with each topic.
-      Using this plot, we can make inferences about the semantics of each topic. For example, for Topic 1, the c-TF-IDF scores are highest for the words "skinny", "fat", and "overweight", as well as "diet". 
-      This indicates that posts classified into this topic discuss issues related to body weight.
+      The figure on the left shows the top 20 topics derived from the BERTopic model and illustrates the relative c-TF-IDF scores of the most frequently recurring words associated with each topic.
+      The score for the most occuring words in these topics seems to be on average around 0.4. However, some words seem to carry more importance for a topic than others.
+      For example, the word 'confidence' seems to be more likely to occur in topic 1 than 'social' or 'talk'. 
+      On the other hand, in the case for example topic 14 or 18, the top 5 words seem to be occur approximaltely equally likely.
+      Using this plot, we can also make inferences about the semantics of each topic. 
+      For example, topic 18 seems to clearly discuss issues related to food and cooking, topic 9 is about marriages or engagements and topic 5 is about family.
       <br><br>
       In addition to the c-TF-IDF scores for each word of a topic, BERTopic also calculates topic embeddings. 
       These are the weighted average of the c-TF-IDF scores of the words that belong to each topic. Based on these topic embeddings, 
       we can create a matrix by applying cosine similarities, calculated as the cosine of the angle between two vectors. 
       The figure on the right shows the resulting similarity matrix of the top 50 topics. As we can see, the first topics created by the model, 
       that also contain most of the posts, are more similar to each other than the last topics. This indicates that the topics discussed 
-      in the majority of posts can be distinguished from each other but are in general related in their content.
+      in the majority of posts can be distinguished from each other but are in general related in their content. 
+      Looking at the names of the topics and the most occuring words, this makes sense as many topics seem to be about relationship, love, sex, dating and so on.
       
     </p>
   </fieldset>
@@ -193,21 +200,25 @@
 
   <fieldset>
     <p>
-     text      
+     BERTopic also performs clustering and provides a visualization of the resulting topic clusters.   
+     One can clearly see in this visualization that some topics seem to be closely related and form dense clusters, while being well separated from the other topics.
+     Additionally, one can see that topic 47 actually seems to be an outlier as suspected, because it is merged at the latest stage in the dendogram on the right.
+     Despite these insights, we can still make no conclusions about which topic is more or less discussed in either the AskMen or AskWomen subreddit.
+     <br><br>
+     All in all, the build-in visualizations of BERTopic offer some insights about the individual posts, the extracted topics and their similarities, but they do not provide a way to compare topic importance inside the AskMen and AskWomen community.
+     To compare the subreddits in terms of shared and unique topics of interest in one or the other community, we needed to come up with our own
+     visualization(s) that address our research question.
     </p>
   </fieldset>
   
   <fieldset class="highlighted">
     <div>
-      <h3>Visualization of most discussed topics</h3>
+      <h3>Visual comparison of most discussed topics</h3>
     </div>
   </fieldset>
   <fieldset>
     <div>
       <p>
-        The build-in visualizations of BERTopic offer some insights about the individual posts, the extracted topics and their similarities, but they do not provide a way to compare topic importance inside the AskMen and AskWomen community.
-        To compare the subreddits in terms of shared and unique topics of interest in one or the other community, we needed to come up with our own
-        visualization(s) that address our research question.
         <br><br>
         For a first analysis of the topics and whether they are more likely to be discussed in the 'AskMen' or 
         'AskWomen' subreddit, we decided to look at a simple bar chart for the 10 topics with the highest occurence in both subreddits.
@@ -233,10 +244,10 @@
     <div>
       <p>
         One can see that there are actually topics that are more likely to be discussed 
-        in 'AskMen' such as <i>'living_career_live_debt'</i>, whereas others are more likely to be addressed in 'AskWomen'
-        as for instance <i>'hair_balding_shampoo_bald'</i>.  
-        However, we can't see huge differences and the plot does only display the most common topics discussed in both communities. 
-        Additionally, this kind of visualization does not include any information about the overall importance of a topic and the similarity between topics.
+        in 'AskMen' such as <i>'college_be_carreer_live'</i>, whereas others are more likely to be addressed in 'AskWomen'
+        as for instance <i>'shave_shaving_hair_shaved'</i> or <i>'wedding_marriage_engagement_bride</i>.  
+        However, many topics seem to be discussed approximately equally often - at least for the displayed top 10 topics. 
+        Additionally to showing only the top 10 topic, this kind of visualization does not include any information about the overall importance of a topic and the similarity between topics.
         Furthermore, it does not scale well if we want to look at more than the top 10 topics. 
         Going deeper into the analyis of the top 50 topics, this approach seems to be not expressive enough to completely answer our reasearch question.
         Thus, this was our motivation to come up with an advanced visualization that adressed these limitations and that is even able to include more information 
@@ -248,7 +259,7 @@
   <fieldset>
     <div>
       <p>
-        The implementation included several steps that are explained in the following. <br><br>
+        The implementation of our interactive visulaization included several steps that are explained in the following. <br><br>
         <strong>Topic embeddings:</strong>
         <br>
         From the BERTopic model, we extracted high dimensional embeddings, capturing the semantic information and meaning of each topic. 
@@ -267,22 +278,22 @@
         <br><br>
         <strong>Design decisions:</strong>
         <br>
-        We decided to represent each topic by a circle varying in size and color. The <strong>position</strong> of each cirlce is given by the 2D embeddings.
+        We decided to represent each topic by a circle varying in size and color. The <strong>position</strong> of each cirlce is given by the <strong>2D embeddings</strong>.
         An alternative to use circles to represent the topics would be to plot the topic names directly. 
         However, with an increasing number of topics to be analyzed, this would result in severe overplotting. This issue is significantly reduced by taking circles instead.
         <br>
-        The <strong>size</strong> of each circle corresponds to the overall occurrence of the respective topic in the dataset. 
+        The <strong>size</strong> of each circle corresponds to the <strong>overall occurrence</strong> of the respective topic in the dataset. 
         Larger circles indicate topics that appear more frequently, while smaller circles represented less common topics. 
         This size-based representation offers an intuitive overview of the importance and prevalence of each topic in the overall dataset. 
         To ensure that each topic is visible in the visualization, we ordered the topics accordingly and draw small circles on top of larger ones.
         <br>
         We used the <strong>color</strong> of the circles to analyze the distribution of topics across the subreddits.
-        Topics predominantly discussed in the AskMen subreddit are represented by blue circles, while topics more commonly found in AskWomen posts are depicted with red circles. 
+        Topics predominantly discussed in the <strong>AskMen</strong> subreddit are represented by <strong>blue</strong> circles, while topics more commonly found in <strong>AskWomen</strong> posts are depicted with <strong>red</strong> circles. 
         Topics with a similar level of occurrence in both subreddits are mapped to a grey color. 
         This color-sceme offers an immediate visual cue to the relative prevalence of a topic in each subreddit. 
         By examining the distribution of blue and red, one can quickly identify topics that are more popular or relevant to one gender-specific community compared to the other. 
         <br>
-        In order to identify each topic, we added a tooltip, displaying the most relevant information about each topic. 
+        In order to identify each topic, we added a <strong>tooltip</strong>, displaying the most relevant information about each topic. 
         This includes the topics name, its id, the top 10 occuring words, the occurence of the topic as absolute number and the respective percentage for AskMen and AskWomen occurences.
         <br>
       </p>
@@ -296,24 +307,27 @@
   <fieldset>
     <div>
       <p>
-        The visualization of the topics and their presence in the subreddits AskMen and AskWomen above shows that the topics discussed
-        in both communities tend to be rather similar:
-
+        ----------------------------- TO-D0!------------------------------------------
         <ul>
-          <li><p>The most discussed topic in both communities is about relationship and dating (1777 posts overall) and the topic 
-            seems to be discussed almost equally often in both subreddits.</p></li>
-          <li><p>The most frequently discussed topic is followed by topics about body weight, attractiveness, sex, sexism, ...</p></li>
+          <li><p>The most discussed topic in both communities is about talking in relationships (id 0 with 3599 posts overall) followed by topics about
+             confidence, sex, sexism, appaerance and attractiveness.</p></li>
+          <li><p>The most frequently discussed topics seem to be discussed almost equally often in both subreddits as the bigger circles are colored rather grey.</p></li>
+          <li><p> text about clusters</p></li>
           <li><p>For the AskWomen subreddit, there is a small tendency to discuss more appaerance and hygiene-related topics 
-            (diet, acne, period, hairstyle), lifestyle questions (last name in marriages, clubbing), and topics like abortion or pain.</p></li>
-          <li><p>In the AskMen subreddit, the discussions are more likely to cover topics like circumcision, military, weapons, and alcohol.</p></li>
+            (shaving, farting, dentist, clothing), lifestyle questions (last name in marriages), topics about animals, female characters in fantasy and clearly topics related to the womens's body (period, abortion, pregnancy) and about the temperature.</p></li>
+          <li><p>In the AskMen subreddit, the discussions are more likely to cover topics like circumcision, sport (football, basketball) military, weapons, and alcohol.</p></li>
         </ul>
+
+        The visualization of the topics and their presence in the subreddits AskMen and AskWomen above shows that the topics most discussed
+        in both communities tend to be rather similar. 
+        However, some rather gender-specific topics like a womens's period of if a men is circumcised or not are clearly more likely to apear in the respective subreddit.
 
         <p><strong>Limitations:</strong> </p>
         <ul>
           <li><p>The in-built visualizations of BERTopic created denser and more clearly separated clusters than it can be seen in our own visualization.
-            Thus, we also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
-            results.</p></li>
-          <li><p>BERTopic is sensitive to input data: test robustness of our extracted topics and results by training BERTopic again with raw data:</p></li>
+            Thus, we also tested several other dimensionality reduction techniques, such as MDS and tSNE but these technique produced no 'better' results.</p></li>
+          <li><p>BERTopic is sensitive to the input data. Thus, we tried to test the robustness of our extracted topics and the results by training BERTopic again with raw data. 
+            The results are discussed in the following.</p></li>
         </ul>
       </p>
     </div>
@@ -329,14 +343,19 @@
 
   <fieldset>
     <p>
+        When using the raw data as input to BERTopic we got 10548 reddit posts that are classified as topic -1, corresponding to 44.3% of the data (44.9% AskMen and 43.4% AskWomen).
+        Compared to the results with the preprocessed data, less posts remain unclassified now. 
+        This indicates that the BERTopic model can work at least as good with raw data than with preprocessed one.
+
         text about results from viz 2
+
     </p>
   </fieldset>
   
 
   <fieldset class="highlighted">
     <div>
-      <h3>Results</h3>
+      <h3>Conclusion</h3>
     </div>
   </fieldset>
 
