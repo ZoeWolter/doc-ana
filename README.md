@@ -34,7 +34,7 @@ This project is structured as follows:
 ```
 ├── doc-ana 
 │   ├── code --------------- folder which contains the code
-│   │   ├── preprocessing.py ------- code for preprocessing and BERTopic modelling
+│   │   ├── processing.py ---------- code for preprocessing and BERTopic modelling
 │   ├── data --------------- folder which contains the data (can be found in cloud due to Git LFS storage limits)
 │   │   ├── BERTopic_50 ------------ data for 50 topic from BERTopic with preprocessed data 
 │   │   ├── BERTopic_50_raw_data --- data for 50 topic from BERTopic with unprocessed data

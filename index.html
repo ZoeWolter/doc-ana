@@ -98,7 +98,7 @@
         Next, we removed special characters to filter out any non-essential symbols or punctuation marks.
         Finally, we applied lemmatization to reduce words to their base form, ensuring that words with similar meanings are treated equally.
         By implementing these preprocessing steps, the raw text data from the AskMen and AskWomen subreddits were transformed into a standardized and cleaner format, laying the foundation for the subsequent topic analysis.
-        The preprocessed data was also used to create the wordclouds displayed above. However, stopwords, which are commonly used but carry little semantic meaning, were removed from the text as well for this purpose. 
+        The preprocessed data was also used to create the wordclouds displayed above. However, stopwords, which are commonly used but carry little semantic meaning, were removed from the text as well for creating the wordclouds. 
       </p>
     </div>
   </fieldset>
@@ -135,7 +135,7 @@
         This is a significant portion of posts that do not fit into any specific topic cluster determined by the algorithm. 
         This could be due to several reasons. It's possible that a substantial portion of the posts contain irrelevant content or diverse topics that do not form coherent clusters. 
         Another explaination could be the heterogeneity in our data due to the diverse sources writing posts and due to the wide range of topics that could be covered.
-        In our case, the topic -1 corresponds to 'relationship_be_girl_her', so there seems to be at least some common intuition (girls in relationsships) inside the cluster.
+        In our case, the topic -1 corresponds to 'relationship_be_girl_her', so there seems to be at least some common intuition (girls in relationships) inside the cluster.
         Nevertheless, we decided to exclude the posts classified as -1 from our further analysis to enhance the interpretability and to focus on meaningful topics.
         In line with this, we also restricted our analysis to the top 50 topics in terms of overall occurence.
         <br><br>
@@ -264,7 +264,8 @@
         <br>
         From the BERTopic model, we extracted high dimensional embeddings, capturing the semantic information and meaning of each topic. 
         To be able to effectively visualize the topics, we aimed to obtain a two-dimensional representation of the topic embeddings.
-        In doing so, we applied <strong>Principal Component Analysis (PCA)</strong>, a dimensionality reduction technique that aims to capture the maximum amount of variation present in the data, while projecting them onto a lower-dimensional space. 
+        In doing so, we applied <strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html">
+          Principal Component Analysis (PCA)</a></strong>, a dimensionality reduction technique that aims to capture the maximum amount of variation present in the data, while projecting them onto a lower-dimensional space. 
         This allows for a more concise representation approximately respresenting the underlying topic structure and preserving key patterns and relationships between topics.
         Consequently, topics that are semantically similar or closely related should be positioned closer together in the 2D space, while those that are dissimilar should be placed farther apart. 
         This arrangement allows to identify clusters, patterns, and even potential topic hierarchies within the dataset.
@@ -326,10 +327,11 @@
           <li><p>In the AskMen subreddit, the discussions are more likely to cover topics about men's body (circumcision), sport (football, basketball) military and weapons (guns). The outlier topic 47 also appears more frequently in AskMen</p></li>
         </ul>
 
+        <p>
         The visualization of the topics and their presence in the subreddits AskMen and AskWomen above shows that the topics most discussed
         in both communities tend to be rather similar. 
         However, some rather gender-specific topics like a womens's period of if a men is circumcised or not are clearly more likely to apear in the respective subreddit.
-
+        </p>
         <p><strong>Limitations:</strong> </p>
         <ul>
           <li><p>The in-built visualizations of BERTopic created denser and more clearly separated clusters than it can be seen in our own visualization.
@@ -340,9 +342,22 @@
       </p>
     </div>
   </fieldset>
+
   <div style="margin:0 auto;text-align:center">
     <object data="img_raw_data/top10_shares_adjusted.svg"></object>
   </div>
+
+  <fieldset>
+    <p>
+      With the raw data, BERTopic yields different topics. As one can see from the barplot above, some of the topics are quite similar
+      to those with the preprocessed data, e.g. <i>'orgasm_sex_sexual_porn'</i> seems to be similar to <i>'virgin_sex_orgasm_sexual'</i> and
+      <i>'shave_hair_hairs_shaving'</i> to <i>'shave_shaving_hair_shaved'</i>. Whereas again many of the top 10 topics seem to be 
+      discussed approximately equally often in both communities, there is quite a difference in the share when it comes to the topic
+      <i>'iud_pill_uterus_periods'</i>, which is much more frequently discussed in the AskWomen subreddit. To further investigate the
+      differences between the results with raw and preprocessed data, we again have a look at all 50 topics and their similarities:
+    </p>
+  </fieldset>
+
   <fieldset id="fieldsetplot2">
     <div id="plot2"></div>
     <div id="tooltip2"></div>
@@ -352,10 +367,10 @@
   <fieldset>
     <p>
         When using the raw data as input to BERTopic we got 10548 reddit posts that are classified as topic -1, corresponding to 44.3% of the data (44.9% AskMen and 43.4% AskWomen).
-        Compared to the results with the preprocessed data, less posts remain unclassified now. 
-        This indicates that the BERTopic model can work at least as good with raw data than with preprocessed one.
+        Compared to the results with the preprocessed data, fewer posts remain unclassified now. This indicates that the BERTopic 
+        model can work at least as good with raw data than with preprocessed one. <br>
 
-        text about results from viz 2
+        TODO: text about results from viz 2
 
     </p>
   </fieldset>
@@ -394,10 +409,12 @@
   <fieldset>
     <div>
       <p>
+        Grootendorst, M. (2022). BERTopic: Neural topic modeling with a class-based TF-IDF procedure. <i>arXiv preprint arXiv:2203.05794.</i> <br>
         Jaech, A., Zayats, V., Fang, H., Ostendorf, M., Hajushirzi, H. (2015). Talking to the crowd: What do people react to in online discussions. <i>arXiv preprint arXiv:1507.02205.</i> <br>
         Khan, A., & Golab, L. (2020). Reddit Mining to Understand Gendered Movements. <i>EDBT/ICDT Workshops.</i> <br>
         Latack, K., Patel, J., Moog, D., Spencer, D., & Nguyen, B. (2021). Withdrawal method inquiries and user experiences: An analysis of content posted on 4 gendered forums on Reddit. <i>Contraception, 104(2), 170-175.</i> <br>
         Lucy, L., & Mendelsohn, J. (2018). Using sentiment induction to understand variation in gendered online communities. <i>arXiv preprint arXiv:1811.07061.</i> <br>
+        Völske, M., Potthast, M., Syed, S., & Stein, B. (2017). TL;DR: Mining Reddit to Learn Automatic Summarization. In <i>Proceedings of the Workshop on New Frontiers in Summarization</i> (pp. 59–63). Association for Computational Linguistics. <br>
         Zayats, V., & Ostendorf, M. (2018). Conversation Modeling on Reddit Using a Graph-Structured LSTM. <i>Transactions of the Association for Computational Linguistics, 6, 121-132.</i>
       </p>
     </div>
