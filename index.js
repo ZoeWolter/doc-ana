@@ -38,7 +38,7 @@ var legend2 = d3.select('#legend2').append('svg')
 //define scales
 var xScale = d3.scaleLinear().range([50, width-100]);
 var yScale = d3.scaleLinear().range([height-100, 50]);
-var sizeScale = d3.scaleLinear().range([20,60]);
+var sizeScale = d3.scaleLinear().range([10,100]);
 var colorScale = d3.scaleLinear().domain([0,0.5,1]).range(['#ca0020','gray', '#0571b0']);
 
 //global variables
