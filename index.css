@@ -48,6 +48,9 @@ fieldset {
 #fieldsetplot {
     justify-content: center;
 }
+#fieldsetplot2 {
+    justify-content: center;
+}
 
 div#tooltip {
     display: none;
@@ -61,5 +64,6 @@ div#tooltip {
     pointer-events: none;
     font-size: 12;
 }
+
 
 

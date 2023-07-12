@@ -131,8 +131,8 @@
         Then, for each topic, we extract the absolute number of posts assigned to the topic, its representative posts and the top 10 most important words.
         <br>
         In BERTopic, the topic ID -1 is used to represent outliers or documents that do not strongly align with any particular topic.
-        In our case, we got 10548 reddit posts that cannot be matched to a topic cluster and are thus classified as topic -1. 
-        These outliers make up 44.9% of the AskMen and 43.4% of the AskWomen posts, corresponding to overall 44.3% of our data. 
+        In our case, we got 11361(10548) reddit posts that cannot be matched to a topic cluster and are thus classified as topic -1. 
+        These outliers make up x 44.9% of the AskMen and x 43.4% of the AskWomen posts, corresponding to overall x 44.3% of our data. 
         This is a significant portion of posts that do not fit into any specific topic cluster determined by the algorithm. 
         This could be due to several reasons. It's possible that a substantial portion of the posts contain irrelevant content or diverse topics that do not form coherent clusters. 
         Another explaination could be the heterogeneity in our data due to the diverse sources writing posts and due to the wide range of topics that could be covered.
@@ -186,6 +186,16 @@
     </p>
   </fieldset>
 
+  <fieldset>
+    <iframe src="img/fig_combined_topics.html" width="100%" height="960px"></iframe>
+    <iframe src="img/fig_combined_hierarchy.html" width="150%" height="960px"></iframe>
+  </fieldset>
+
+  <fieldset>
+    <p>
+     text      
+    </p>
+  </fieldset>
   
   <fieldset class="highlighted">
     <div>
@@ -297,23 +307,32 @@
             (diet, acne, period, hairstyle), lifestyle questions (last name in marriages, clubbing), and topics like abortion or pain.</p></li>
           <li><p>In the AskMen subreddit, the discussions are more likely to cover topics like circumcision, military, weapons, and alcohol.</p></li>
         </ul>
+
+        <p><strong>Limitations:</strong> </p>
+        <ul>
+          <li><p>The in-built visualizations of BERTopic created denser and more clearly separated clusters than it can be seen in our own visualization.
+            Thus, we also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
+            results.</p></li>
+          <li><p>BERTopic is sensitive to input data: test robustness of our extracted topics and results by training BERTopic again with raw data:</p></li>
+        </ul>
       </p>
     </div>
   </fieldset>
-
-
-  <fieldset>
-    <iframe src="img/fig_combined_topics.html" width="100%" height="960px"></iframe>
-    <iframe src="img/fig_combined_hierarchy.html" width="150%" height="960px"></iframe>
+  <div style="margin:0 auto;text-align:center">
+    <object data="img_raw_data/top10_shares_adjusted.svg"></object>
+  </div>
+  <fieldset id="fieldsetplot2">
+    <div id="plot2"></div>
+    <div id="tooltip2"></div>
+    <div id="legend2"></div>
   </fieldset>
 
   <fieldset>
     <p>
-      The in-built visualizations of BERTopic create denser and more clearly separated clusters than it can be seen in our own visualization.
-      Thus, we also tested several other dimensionality reduction techniques, such as MDS and tSNE. However, these technique produced no better 
-      results.
+        text about results from viz 2
     </p>
   </fieldset>
+  
 
   <fieldset class="highlighted">
     <div>
