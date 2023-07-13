@@ -55,7 +55,7 @@ print(f'Average post length AskWomen: {np.round(np.mean(post_lengths_women))}')
 
 #%% data preprocessing -----------------------------------------------------------------
 # We want to compare the output of different BERTopic models. Therefore, we first generated topics with BERTopic from 
-# preprocessed data and then without any preprocessing steps. For that, the function "preprocess(post)" was not applied.
+# preprocessed data and then without any preprocessing steps. For that, the function "preprocess(posts)" was not applied.
 
 def preprocess(posts):
     '''
@@ -78,7 +78,7 @@ def preprocess(posts):
         posts[i] = re.sub(r"[^a-zA-Z0-9]", " ", posts[i]) # remove special characters
         # remove stop words and lemmatize words
         words = posts[i].split()
-        words_new = [lemmatizer.lemmatize(word) for word in words if word not in stopwords and len(word) > 1] 
+        words_new = [lemmatizer.lemmatize(word) for word in words if len(word) > 1] #and word not in stopwords  #uncomment stop word removal to generate wordclouds!!
         posts[i] = " ".join(words_new)
     return posts
 

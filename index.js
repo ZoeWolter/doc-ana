@@ -44,6 +44,7 @@ var colorScale = d3.scaleLinear().domain([0,0.5,1]).range(['#ca0020','gray', '#0
 //global variables
 const num_posts_men = 14538;
 const num_posts_women = 9278;
+var sizeMax;
 
 //load data and create visulaization
 d3.dsv(";","data/topics.csv", function(d){
@@ -57,7 +58,8 @@ d3.dsv(";","data/topics.csv", function(d){
     // adjust domains of defined scales to min and max of data
     xScale.domain(d3.extent(data, d => d.x));
     yScale.domain(d3.extent(data, d => d.y));
-    sizeScale.domain(d3.extent(data, d => d.Count));
+    sizeMax = d3.max(data, d => d.Count);
+    sizeScale.domain([0,sizeMax]);
 
     // calculate relative ocuurences of topics in AskMen/Women -> adjusted by total posts in AskMen/Women
     for (let i = 0; i < data.length; i++) {
@@ -200,7 +202,11 @@ d3.dsv(";","data/topics_raw_data.csv", function(d){
     // adjust domains of defined scales to min and max of data
     xScale.domain(d3.extent(data, d => d.x));
     yScale.domain(d3.extent(data, d => d.y));
-    sizeScale.domain(d3.extent(data, d => d.Count));
+    let sizeMax2 = d3.max(data, d => d.Count);
+    if (sizeMax2 > sizeMax) { //adjust only if max counts are higher to enable comparison
+        sizeScale.domain([0,sizeMax2]);
+    }
+
 
     // calculate relative ocuurences of topics in AskMen/Women -> adjusted by total posts in AskMen/Women
     for (let i = 0; i < data.length; i++) {
