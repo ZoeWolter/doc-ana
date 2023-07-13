@@ -54,6 +54,8 @@ print(f'Average post length AskMen: {np.round(np.mean(post_lengths_men))}')
 print(f'Average post length AskWomen: {np.round(np.mean(post_lengths_women))}')
 
 #%% data preprocessing -----------------------------------------------------------------
+# We want to compare the output of different BERTopic models. Therefore, we first generated topics with BERTopic from 
+# preprocessed data and then without any preprocessing steps. For that, the function "preprocess(post)" was not applied.
 
 def preprocess(posts):
     '''

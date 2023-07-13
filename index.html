@@ -55,11 +55,11 @@
         similarity</b> between r/askmen and r/askwomen misaligns with their low <b>text similarity</b> [...] and near
         average <b>user similarity</b>". Khan and Golab (2020) aim to understand gendered movements on Reddit and thus use topic
         modelling (Non-negative Matrix Factorization topic modelling algorithm). They conclude that the subreddits 
-        AskMen and AskWomen are <b>rather similar</b> when comparing with other subreddits. 
+        AskMen and AskWomen are <b>rather similar</b> compared to other subreddits. 
         <br><br>
-        Therefore, our analysis builds on this exisiting literature by analyzing the topics which are discussed in both
-        subreddits. The description of both subreddits already indicates that <b>there might be differences in topics</b>, 
-        but is it really the case?
+        Our analysis builds on this exisiting literature by analyzing the topics which are discussed in both
+        subreddits. The description of the subreddits already indicates that <b>there might be differences in the topics</b>, 
+        but can we confirm this with our analysis?
         <ul>
           <li><p><b>AskWomen:</b> A subreddit dedicated to asking women questions about their thoughts, lives, and experiences.</p></li>
           <li><p><b>AskMen:</b> A semi-serious place to ask men casual questions about life, career, and more.</p></li>
@@ -80,13 +80,13 @@
         From the whole reddit dataset, we started to filter the data to get the posts written online in the AskMen and AskWomen 
         subreddits.
         In total we got 14538 posts in the AskMen and 9278 posts in the AskWomen community. 
-        This inbalance suggests that the AskMen community is more popular and more frequently used.
-        This also rose the question if there are significantly other <strong>differences between the communities</strong> apart 
+        This inbalance suggests that the AskMen community is more popular and more frequently used, 
+        which also rose the question if there are other significant <strong>differences between the communities</strong> apart 
         from the contents discussed.
         <br><br>
         One thing we looked at is the average post length in both subreddits. 
-        While the average post length for AskMen posts is 257, the avergae post in the AskWomen community is 250 - so there seems 
-        to be no huge difference. The following bar plot shows the distribution of post lengths within both subreddits:
+        With an average post length of 257 for the AskMen, and 250 for the AnskWomen subreddit, there is no large difference visible. 
+        The following bar plot shows the distribution of post lengths within both subreddits:
       </p>
         <div style="margin:0 auto;text-align:center">
           <img class="responsive-image" src="img/post-length.svg" alt="Distribution post lengths">
@@ -97,8 +97,12 @@
         To account for negation short forms, such as "can't" or "won't,"  we removed apostrophes from the posts. 
         Next, we removed special characters to filter out any non-essential symbols or punctuation marks.
         Finally, we applied lemmatization to reduce words to their base form, ensuring that words with similar meanings are treated equally.
-        By implementing these preprocessing steps, the raw text data from the AskMen and AskWomen subreddits were transformed into a standardized and cleaner format, laying the foundation for the subsequent topic analysis.
-        The preprocessed data was also used to create the wordclouds displayed above. However, stopwords, which are commonly used but carry little semantic meaning, were removed from the text as well for creating the wordclouds. 
+        By implementing these preprocessing steps, the raw text data from the AskMen and AskWomen subreddits were transformed into a standardized and cleaner format, 
+        laying the foundation for the subsequent topic analysis.
+        The preprocessed data was also used to create the wordclouds displayed above. However, stopwords were removed from the text as well for creating the wordclouds. 
+        For BERTopic it is suggested to not apply stopword removal to the data input before generating the model. 
+        Even though stopwords do not carry strong semantic meaning, they can still be important for the context of the other words in a post.
+        Therefore, the data for the following BERTopic model was preprocessed with the steps preprocessed above, but no stopwords were removed. 
       </p>
     </div>
   </fieldset>
@@ -111,24 +115,25 @@
     <div>
       <p>
         For a topic analysis, we used the topic modeling technique of <a href="https://github.com/MaartenGr/BERTopic">BERTopic</a>. 
+        BERTopic does not provide a method that allows for the direct comparison of the topics of two groups, which would be needed to compare the topics in the two subreddits. 
         Theoretical, one could perform BERTopic individually on each dataset, but one may end up with different topic models for each dataset. 
         This would make it challenging to compare and contrast the topics directly. 
         By merging the datasets and applying BERTopic to all posts at once, one can ensure that the same topic modeling approach is applied uniformly to both datasets, enabling direct comparison of shared topics and differences.
         Therefore, we merged the data of both subreddits 'AskMen' and 'AskWomen', leading to 23816 reddit posts overall as input data 
         to BERTopic. The <strong>BERTopic's algorithm</strong> comprises five steps:
         <br><br>
-        1. Embeddings: Reddit posts are transformed to numerical representations <br>
-        2. Dimensionality Reduction: here the Uniform Manifold Approximation and Projection (<a href="https://github.com/lmcinnes/umap">UMAP</a>) 
+        1. <strong>Embeddings:</strong> Reddit posts are transformed to numerical representations <br>
+        2. <strong>Dimensionality Reduction:</strong> here the Uniform Manifold Approximation and Projection (<a href="https://github.com/lmcinnes/umap">UMAP</a>) 
         dimension reduction technique is used<br>
-        3. Clustering: the hierarchical clustering algorithm HDBSCAN is used here in order to cluster the posts <br>
-        4. Tokenizer: using a bag-of-words representation of each cluster, the most frequent words of each cluster are defined <br>
-        5. Topic representation: using a class-based TF-IDF as weighting scheme, the algorithm returns the "most important" words of 
+        3. <strong>Clustering:</strong> the hierarchical clustering algorithm HDBSCAN is used in order to cluster the posts <br>
+        4. <strong>Tokenizer:</strong> using a bag-of-words representation of each cluster, the most frequent words of each cluster are defined <br>
+        5. <strong>Topic representation:</strong> using a class-based TF-IDF as weighting scheme, the algorithm returns the "most important" words of 
         each cluster which represent the topic, i.e. these words constitute the topic name
         <br><br>
         When applying the BERTopic model to our reddit data, each post is assigned to exactly one topic, where each topic is represented as unique ID followed by its 4 most representive words. 
         Additionally, we get the information if a certain post is representative for the assigned topic or not.
         Then, for each topic, we extract the absolute number of posts assigned to the topic, its representative posts and the top 10 most important words.
-        <br>
+        <br><br>
         In BERTopic, the topic ID -1 is used to represent outliers or documents that do not strongly align with any particular topic.
         In our case, we got 11361 reddit posts that cannot be matched to a topic cluster and are thus classified as topic -1. 
         These outliers make up 48.6% of the AskMen and 45.9% of the AskWomen posts, corresponding to overall 47.7% of our data. 
@@ -139,8 +144,8 @@
         Nevertheless, we decided to exclude the posts classified as -1 from our further analysis to enhance the interpretability and to focus on meaningful topics.
         In line with this, we also restricted our analysis to the top 50 topics in terms of overall occurence.
         <br><br>
-        The BERTopic model does also include some in-build visualization that we used for our analysis. 
-        The conclusions drawn from the visualizations are discussed below.  
+        The BERTopic model offers in-build visualization that we used to get a first impression of the data. 
+        The conclusions drawn from the visualizations are discussed below. 
       </p>
     </div>
   </fieldset>
@@ -156,8 +161,8 @@
       Moreover, the figure gives a first insight into the relationship between the individual posts and the topics. 
       Posts that belong to the same topic tend to be close to each other and form dense clusters, as in the case of topic 8 or 9. 
       However, some topics seem to be more spread out as for instance topic 6, 12 or 20.
-      Some contributions belonging to a certain topic are very close to other themes (see themes 5 abput parents and 7 about career). 
-      These posts and topcis seem to be more closely related in terms of semantics to each other.
+      Some contributions belonging to a certain topic are very close to other themes (see topic 5 about parents and 7 about career). 
+      These posts and topics seem to be more closely related in terms of semantics to each other.
       In contrast, some topics are farther apart from all the others or at the corners (see topic 32 about tattoos and piercings). 
       Moreover, one can also see that some topics appear more frequent than others. 
       An example here is given by topic 0, that takes up almost the entire upper left corner.
@@ -188,7 +193,7 @@
       The figure on the right shows the resulting similarity matrix of the top 50 topics. As we can see, the first topics created by the model, 
       that also contain most of the posts, are more similar to each other than the last topics. This indicates that the topics discussed 
       in the majority of posts can be distinguished from each other but are in general related in their content. 
-      Looking at the names of the topics and the most occuring words, this makes sense as many topics seem to be about relationship, love, sex, dating and so on.
+      Looking at the names of the topics and the most occuring words, this makes sense as many topics seem to be about relationship, love, sex, dating etc..
       
     </p>
   </fieldset>
@@ -205,33 +210,33 @@
      Additionally, one can see that topic 47 actually seems to be an outlier as suspected, because it is merged at the latest stage in the dendogram on the right.
      Despite these insights, we can still make no conclusions about which topic is more or less discussed in either the AskMen or AskWomen subreddit.
      <br><br>
-     All in all, the build-in visualizations of BERTopic offer some insights about the individual posts, the extracted topics and their similarities, but they do not provide a way to compare topic importance inside the AskMen and AskWomen community.
-     To compare the subreddits in terms of shared and unique topics of interest in one or the other community, we needed to come up with our own
-     visualization(s) that address our research question.
+     In conclusion, the build-in visualizations of BERTopic offer some insights into the individual posts, the extracted topics and their similarities.
+     However, they do not provide a way to compare differences between the AskMen and AskWomen community.
+     To compare the subreddits in terms of shared and unique topics of interest, we needed to come up with our own
+     visualizations that address our research question.
     </p>
   </fieldset>
   
   <fieldset class="highlighted">
     <div>
-      <h3>Visual comparison of most discussed topics</h3>
+      <h3>Visual comparison of the most discussed topics</h3>
     </div>
   </fieldset>
   <fieldset>
     <div>
       <p>
-        <br><br>
         For a first analysis of the topics and whether they are more likely to be discussed in the 'AskMen' or 
         'AskWomen' subreddit, we decided to look at a simple bar chart for the 10 topics with the highest occurence in both subreddits.
         <br> <br>
-        <strong>Adjustment for inbalance in dataset:</strong>
+        <strong>Adjustment for imbalance in the dataset:</strong>
         <br>
         To calculate the occurence of each topic relative to the AskMen and AskWomen subreddits, we needed to take the inbalance of our dataset into account.
         Using the absolute number of posts within a topic for AskMen and AskWomen (topic_count_men, topic_count_women) and having 14538 posts in total in AskMen and 9278 in AskWomen, the topic share for each subreddit is given by:
         <br>
         <code>topic_share_men = (topic_count_men / 14538) / (topic_count_men / 14538 + topic_count_women / 9278)</code>
-        <br>
+        <br><br>
         <code>topic_share_women = (topic_count_women / 9278) / (topic_count_women / 9278 + topic_count_men / 14538)</code>
-        <br>
+        <br><br>
         Using these formulas, topic_share_men and topic_share_women always add up to 1, such that one can easily compare the relative occurences.
       </p>
     </div>
@@ -250,7 +255,7 @@
         Additionally to showing only the top 10 topic, this kind of visualization does not include any information about the overall importance of a topic and the similarity between topics.
         Furthermore, it does not scale well if we want to look at more than the top 10 topics. 
         Going deeper into the analyis of the top 50 topics, this approach seems to be not expressive enough to completely answer our reasearch question.
-        Thus, this was our motivation to come up with an advanced visualization that adressed these limitations and that is even able to include more information 
+        Thus, it was our motivation to come up with an advanced visualization that adressed these limitations and that is even able to include more information 
         about each topic through user interactions, i.e. a tooltip displayed when hovering over a topic of interest.
       </p>
     </div>
@@ -265,17 +270,20 @@
         From the BERTopic model, we extracted high dimensional embeddings, capturing the semantic information and meaning of each topic. 
         To be able to effectively visualize the topics, we aimed to obtain a two-dimensional representation of the topic embeddings.
         In doing so, we applied <strong><a href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html">
-          Principal Component Analysis (PCA)</a></strong>, a dimensionality reduction technique that aims to capture the maximum amount of variation present in the data, while projecting them onto a lower-dimensional space. 
+        Principal Component Analysis (PCA)</a></strong>, a dimensionality reduction technique that aims to capture the maximum amount of variation present in the data, 
+        while projecting them onto a lower-dimensional space. 
         This allows for a more concise representation approximately respresenting the underlying topic structure and preserving key patterns and relationships between topics.
         Consequently, topics that are semantically similar or closely related should be positioned closer together in the 2D space, while those that are dissimilar should be placed farther apart. 
         This arrangement allows to identify clusters, patterns, and even potential topic hierarchies within the dataset.
-        <br>
-        BERTopic itself does also perform dimensionality reduction on the embeddings to produce some in-build visualizations but unfortunately, the model does not provide an option to output the embeddings directly in a lower dimensionality.
+        <br><br>
+        BERTopic itself does also perform dimensionality reduction on the embeddings to produce some in-build visualizations but unfortunately
+        the model does not provide an option to output the embeddings directly in a lower dimensionality.
         <br>
         An alternative idea was also to calculate the topic embeddings using static word embeddings extracted from the Glove 200 embeddings trained on a large corpus of twitter data. 
         More specifically, one could get a word embedding for each word (that is not out of vocabulary) in a topic's name and then take the mean of the word embeddings as overall topic embeddings.
         Taking the mean should work quite well in this scenario since the words constituting a topic's name should be close together in the embedding space.
-        We actually tried this approach as well and the results were quite similar to those obtained above but as we expect the embeddings coming from BERTopic to be more precise, we decided to stick with this procedure.
+        We actually tried this approach as well and the results were quite similar to those obtained above but as we expect the embeddings coming from BERTopic to be more precise,
+        we decided to stick with this procedure.
         <br><br>
         <strong>Design decisions:</strong>
         <br>
@@ -287,9 +295,10 @@
         Larger circles indicate topics that appear more frequently, while smaller circles represented less common topics. 
         This size-based representation offers an intuitive overview of the importance and prevalence of each topic in the overall dataset. 
         To ensure that each topic is visible in the visualization, we ordered the topics accordingly and draw small circles on top of larger ones.
-        <br>
+        <br><br>
         We used the <strong>color</strong> of the circles to analyze the distribution of topics across the subreddits.
-        Topics predominantly discussed in the <strong>AskMen</strong> subreddit are represented by <strong>blue</strong> circles, while topics more commonly found in <strong>AskWomen</strong> posts are depicted with <strong>red</strong> circles. 
+        Topics predominantly discussed in the <strong>AskMen</strong> subreddit are represented by <strong>blue</strong> circles,
+        while topics more commonly found in <strong>AskWomen</strong> posts are depicted with <strong>red</strong> circles. 
         Topics with a similar level of occurrence in both subreddits are mapped to a grey color. 
         This color-sceme offers an immediate visual cue to the relative prevalence of a topic in each subreddit. 
         By examining the distribution of blue and red, one can quickly identify topics that are more popular or relevant to one gender-specific community compared to the other. 
@@ -366,11 +375,13 @@
 
   <fieldset>
     <p>
-        When using the raw data as input to BERTopic we got 10548 reddit posts that are classified as topic -1, corresponding to 44.3% of the data (44.9% AskMen and 43.4% AskWomen).
-        Compared to the results with the preprocessed data, fewer posts remain unclassified now. This indicates that the BERTopic 
-        model can work at least as good with raw data than with preprocessed one. <br>
-
-        TODO: text about results from viz 2
+      The graph above shows the 2-dimensional representations of the topic embeddings generated by the topic model with raw input data. 
+      Even though is seems quite similar to the visualization of the preprocessed data, there are some visible differences. 
+      The topics that are related seem to form denser clusters than in the figure above. However, we can still spot the same semantic clusters about relationship and family, hobbies and appearance.
+      <br><br>
+      When using the raw data as input to BERTopic we get 10548 reddit posts that are classified as topic -1, corresponding to 44.3% of the data (44.9% AskMen and 43.4% AskWomen).
+      Compared to the results with the preprocessed data, fewer posts remain unclassified now. This indicates that the BERTopic 
+      model can work at least as good with raw data than with preprocessed one. <br>
 
     </p>
   </fieldset>
@@ -392,9 +403,11 @@
           <li><p>However, our findings are <b>limited</b> as it is only a descriptive analysis, so no causal confirmation of those
             differences is possible.</p></li>
           <li><p>Topic modelling yields nice <b>first insights</b>, but most frequent words do not necessarily help to understand what 
-            a topic might be about. Additionally, it seems to be quite questionable whether the pure frequency of words defines 
-            a topic. On top of that, it is problematic if a post does not match any of the other defined topics or one post is about
-            more than one topic.</p></li>
+            a topic might be about. </p></li>
+          <li><p>In addition, the model does not account for the option that a post covers multiple topics or no clear topic at all. 
+            With BERTopic, these posts are simply sorted out and not further considered.</p></li>
+          <li><p>Depending on the input data and the performed preprocessing, the topic model generates different topic. 
+            However, all model agree on the most common topics and the general clusters of topics in the data set. </p></li>
         </ul>
       </p>
     </div>
