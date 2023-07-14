@@ -101,7 +101,8 @@
         By implementing these preprocessing steps, the raw text data from the AskMen and AskWomen subreddits were transformed into a standardized and cleaner format, 
         laying the foundation for the subsequent topic analysis.
         <br><br>
-        The preprocessed data was also used to create the <strong>wordclouds</strong> displayed above. However for the creation of the wordclouds, we removed stopwords from the text as well. 
+        The preprocessed data was also used to create the <strong>wordclouds</strong> displayed above. 
+        However, for the creation of the wordclouds we removed stopwords from the text as well. 
         With the wordclouds, we can explore the data and get some first insights about the most occuring words in each subreddit.
         However, at least at this point, there seems to be no big differences as many most occuring words are the same in both pictures, 
         i.e. 'people', 'woman', 'friend', 'guy', 'girl', 'think' or 'time'.
@@ -123,12 +124,12 @@
         For the topic analysis, we used the topic modeling technique of <a href="https://github.com/MaartenGr/BERTopic">BERTopic</a>. 
         BERTopic utilizes the transformer-based language model BERT and a class-based TF-IDF approach, such that it provides easily interpretable topics.
         However, the model does not provide a method that allows for the direct comparison of the topics of two groups, which would be needed to compare the topics in the two subreddits. 
-        Theoretical, one could perform BERTopic individually on each dataset, but one may end up with different topic models for each dataset. 
-        This would make it challenging to compare and contrast the topics directly. 
+        Theoretical, one could perform BERTopic individually on each dataset, but this could result in different topic models for each dataset, 
+        which would make it challenging to compare and contrast the topics directly. 
         By merging the datasets and applying BERTopic to all posts at once, one can ensure that the same topic modeling approach is applied uniformly to both datasets, enabling direct comparison of shared topics and differences.
         Therefore, we merged the data of both subreddits 'AskMen' and 'AskWomen', leading to 23816 reddit posts overall as input data 
         to BERTopic. 
-        <br>
+        <br><br>
         The <strong>BERTopic's algorithm</strong> comprises five steps:
         <br><br>
         1. <strong>Embeddings:</strong> Reddit posts are transformed to numerical representations <br>
