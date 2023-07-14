@@ -24,7 +24,7 @@
 
         pip install -r requirements.txt 
 
-5. Run the code in the folder `data/`. The file `dataloader.py` downloads the [reddit posts from Hugging Face](https://huggingface.co/datasets/webis/tldr-17) and `preprocessing.py` contains the code for preprocessing, BERTopic modelling, and other analyses. 
+5. Run the code in the folder `code/`. The file `dataloader.py` downloads the [reddit posts from Hugging Face](https://huggingface.co/datasets/webis/tldr-17) and `preprocessing.py` contains the code for preprocessing, BERTopic modelling, and other analyses. 
 
 
 ## Project structure
@@ -35,15 +35,15 @@ This project is structured as follows:
 ├── doc-ana 
 │   ├── code --------------- folder which contains the code
 │   │   ├── processing.py ---------- code for preprocessing and BERTopic modelling
+│   │   ├── dataloader.py ---------- data for 50 topics from BERTopic with preprocessed data
 │   ├── data --------------- folder which contains the data (can be found in cloud due to Git LFS storage limits)
-│   │   ├── BERTopic_50 ------------ data for 50 topic from BERTopic with preprocessed data 
-│   │   ├── BERTopic_50_raw_data --- data for 50 topic from BERTopic with unprocessed data
+│   │   ├── BERTopic_50 ------------ data for 50 topics from BERTopic with preprocessed data 
+│   │   ├── BERTopic_50_raw_data --- data for 50 topics from BERTopic with unprocessed data
 │   │   ├── askmen.csv ------------- AskMen subreddit data
 │   │   ├── askwomen.csv ----------- AskWomen subreddit data
 │   │   ├── topics_raw_data.csv ---- topics, count, embeddings etc. of unprocessed data
 │   │   ├── topics.csv ------------- topics, count, embeddings etc. of preprocessed data
 │   │   ├── eng_stop_words.txt ----- file with English stopwords
-│   │   ├── dataloader.py --- data for 50 topic from BERTopic with preprocessed data
 │   ├── img ---------------- folder with all images from analysis with preprocessed data
 │   ├── img_raw_data ------- folder with all images from analysis with unprocessed data 
 │   ├── d3.js -------------- d3 library
